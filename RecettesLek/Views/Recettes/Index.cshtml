@@ -1,0 +1,75 @@
+﻿@model IEnumerable<RecettesLek.Models.ModeleVueRecetteOutput>
+
+@{
+    ViewData["Title"] = "Recettes";
+}
+
+<h1>@ViewData["Title"] </h1>
+@if (User.Identity.IsAuthenticated) {
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
+
+@if (Model.Count()>0) {
+    
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nom)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ComposantsPrincipaux)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Image)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ComposantsPrincipaux)
+                </td>
+                <td>
+                        <img src="@ToBase64String(item.Image, item.Mimetype)" alt="Image" />
+                    
+                </td>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.RecetteID">Comment</a> |
+                        
+                    </td>
+                }
+            </tr>
+    }
+        </tbody>
+    </table>
+}
+else 
+{
+    <p> There is no recipies available , please log in if you aren't to add one .</p>
+
+}
+
+@functions {
+    public string ToBase64String(byte[] bytes, string mimeType)
+    {
+        var base64 = Convert.ToBase64String(bytes);
+        return $"data:{mimeType};base64,{base64}";
+    }
+}

@@ -1,0 +1,98 @@
+﻿@model RecettesLek.Models.ModeleVueRecetteEdit
+
+@{
+    ViewData["Title"] = "Edit a recipe";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input type="hidden" asp-for="RecetteId"/>
+                <input type="hidden" asp-for="Mimetype"/>
+                <input type="hidden" asp-for="Image"/>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Nom" class="control-label"></label>
+                <input  asp-for="Nom" class="form-control" value="@Model.Nom" />
+                <span asp-validation-for="Nom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" value="@Model.Description" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComposantsPrincipaux" class="control-label"></label>
+                <input asp-for="ComposantsPrincipaux" class="form-control" value="@ComposantsPrincipaux(Model.ComposantsPrincipaux)" />
+                <span asp-validation-for="ComposantsPrincipaux" class="text-danger"></span>
+            </div>
+            <img src="@ToBase64String(Model.Image, Model.Mimetype)" id="Affichage" alt="Image" />
+            <div class="form-group">
+                 <input type="file"  asp-for="NewImage"  class="form-control"  />
+                 <span asp-validation-for="NewImage" class="text-danger"></span>
+
+
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+
+        document.getElementById('NewImage').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.getElementById('Affichage');
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+                
+            }
+        });
+        lum
+
+    </script>
+
+}
+
+@functions {
+    public string ToBase64String(byte[] bytes, string mimeType)
+    {
+        var base64 = Convert.ToBase64String(bytes);
+        return $"data:{mimeType};base64,{base64}";
+    }
+
+    public string ComposantsPrincipaux(List<string> composants)
+    {
+        string result=string.Empty;
+        foreach (string composant in composants)
+        {
+            result= result +" "+ composant ;
+
+        }
+
+        result = result.Substring(1);
+
+        return result;
+    }
+}
+
+
