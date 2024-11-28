@@ -209,7 +209,8 @@ namespace RecettesLek.Controllers
         }
 
         private Task<Utilisateur> GetCurrentUserAsync() =>
-          _  .GetUserAsync(HttpContext.User);
+          _userManager.GetUserAsync(HttpContext.User);
+
         public async Task<string> RecupererIdUtilisteurCourant() {
             Utilisateur utilisateur = await GetCurrentUserAsync();
             return utilisateur?.Id;
