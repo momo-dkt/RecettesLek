@@ -260,3 +260,4 @@ C:\DEV\Projects\RecettesLek\RecettesLek\obj\Debug\net8.0\refint\RecettesLek.dll
 C:\DEV\Projects\RecettesLek\RecettesLek\obj\Debug\net8.0\RecettesLek.pdb
 C:\DEV\Projects\RecettesLek\RecettesLek\obj\Debug\net8.0\RecettesLek.genruntimeconfig.cache
 C:\DEV\Projects\RecettesLek\RecettesLek\obj\Debug\net8.0\ref\RecettesLek.dll
+C:\DEV\Projects\RecettesLek\RecettesLek\obj\Debug\net8.0\RecettesLek.sourcelink.json
