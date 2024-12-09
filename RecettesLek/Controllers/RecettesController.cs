@@ -219,5 +219,10 @@ namespace RecettesLek.Controllers
         public void Calcul() {
             int a = 1 + 1;
         }
+
+        public void Calcul2()
+        {
+            int a = 1 + 1;
+        }
     }
 }
