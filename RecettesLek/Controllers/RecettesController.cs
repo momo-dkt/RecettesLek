@@ -215,5 +215,9 @@ namespace RecettesLek.Controllers
             Utilisateur utilisateur = await GetCurrentUserAsync();
             return utilisateur?.Id;
         }
+
+        public void Calcul() {
+            int a = 1 + 1;
+        }
     }
 }
