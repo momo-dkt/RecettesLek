@@ -47,7 +47,7 @@ steps:
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Build Artifacts'
-  condition: 'succeeded'
+  condition: 'succeeded()'
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'application-build'
