@@ -42,7 +42,7 @@ steps:
   inputs:
     command: publish
     project: '**/RecettesLek/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)   --zipAfterPublish'
+    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory) /p:ZipAfterPublish=true'
 
 
 - task: PublishBuildArtifacts@1
