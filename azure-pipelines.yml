@@ -46,5 +46,29 @@ stages:
     - publish: '$(Build.ArtifactStagingDirectory)'
       artifact: drop
 
+- stage: 'Deploy'
+  displayName: 'Deploy the web application'
+  jobs:
+  - deployment: Deploy
+    pool: Pool-mdiakhate778_Organization
+    environment: dev
+    variables: 
+    - group: Release
+    strategy: 
+       runOnce:
+         deploy:
+          steps:
+          - download: current
+            artifact: drop
+          - task: AzureWebApp@1
+            displayName: 'Azure App Service Deploy: website'
+            inputs:
+              azureSubscription: 'recette-lek-connection'
+              appName: '$(WebAppName)'
+              package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip' 
+  
+
+
+
   
 
