@@ -3,59 +3,48 @@
 # Add steps that publish symbols, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
-trigger:
+trigger: 
 - master
-
-pool:
-  name: Pool-project-build-pipelines
 
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
-  buildConfiguration: Debug
+  buildConfiguration: 'Debug'
   outputFolder: './publish'
 
-steps:
-- task: NuGetToolInstaller@1
+stages:
+- stage: 'Build'
+  displayName: 'Buid the web application'
+  jobs:
+  - job: 'Build'
+    displayName: 'Build job'
+    pool: Pool-mdiakhate778_Organization
 
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
+    steps:
+    - task: DotNetCoreCLI@2
+      displayName: 'Restore project dependencies'
+      inputs:
+        command: 'restore'
+        projects: '**/*.csproj'
 
-- task: VSBuild@1
-  inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    - task: DotNetCoreCLI@2
+      displayName: 'Build the project - $(buildConfiguration)'
+      inputs:
+        command: 'build'
+        arguments: '--no-restore --configuration $(buildConfiguration)'
+        projects: '**/*.csproj'
 
-- script: dotnet restore 
-  displayName: 'Restore dependencies'
+    - task: DotNetCoreCLI@2
+      displayName: 'Publish the project - $(buildConfiguration)'
+      inputs:
+        command: 'publish'
+        projects: '**/*.csproj'
+        publishWebProjects: false
+        arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
+        zipAfterPublish: true
 
+    - publish: '$(Build.ArtifactStagingDirectory)'
+      artifact: drop
 
-
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'Build the project'
-
-- task: DotNetCoreCLI@0
-  displayName: 'Publish application'
-  inputs:
-    command: publish
-    project: '**/RecettesLek/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory) /p:ZipAfterPublish=true'
-
-
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Build Artifacts'
-  condition: 'succeeded()'
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'application-build'
-    publishLocation: 'Container'
-   
   
 
-- task: VSTest@2
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
