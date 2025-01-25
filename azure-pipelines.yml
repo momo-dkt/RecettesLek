@@ -7,7 +7,7 @@ trigger:
 - master
 
 pool:
-  name: Pool-project-build-pipelines
+  name: Pool-mdiakhate778_Organization
 
 variables:
   solution: '**/*.sln'
