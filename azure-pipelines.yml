@@ -63,8 +63,8 @@ stages:
             displayName: 'Azure App Service Deploy: website'
             inputs:
               azureSubscription: 'recette-lek-connection'
-              appName: '$(WebAppName)'
-              package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip' 
+              appName: $(WebAppName)
+              package: $(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip
   
 
 
