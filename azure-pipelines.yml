@@ -65,9 +65,4 @@ stages:
               azureSubscription: 'recette-lek-connection'
               appName: $(WebAppName)
               package: $(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip
-  
-
-
-
-  
 
