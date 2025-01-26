@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+ using Microsoft.EntityFrameworkCore;
 using RecettesLek.Data;
 
 var builder = WebApplication.CreateBuilder(args);
