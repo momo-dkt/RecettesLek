@@ -53,6 +53,8 @@ stages:
   - deployment: Deploy
     pool: Pool-mdiakhate778_Organization
     environment: dev
+    variables: 
+    - group: Release
     strategy: 
        runOnce:
          deploy:
