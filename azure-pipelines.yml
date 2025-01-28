@@ -47,7 +47,7 @@ stages:
     - publish: '$(Build.ArtifactStagingDirectory)'
       artifact: drop
 
-- stage: 'Deploy'
+- stage:  'Deploy'
   displayName: 'Deploy the web application'
   jobs:
   - deployment: Deploy
