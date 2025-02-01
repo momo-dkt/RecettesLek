@@ -42,9 +42,9 @@ stages:
         command: 'publish'
         projects: '**/*.csproj'
         publishWebProjects: false
-        arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
+        arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)/$(zipFileName)'
         zipAfterPublish: true
-        zipFileName: $(zipFileName)
+        
 
     - publish: '$(Build.ArtifactStagingDirectory)'
       artifact: drop
