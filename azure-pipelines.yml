@@ -12,7 +12,7 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Debug'
   outputFolder: './publish'
-  zipFileName: 'app-$(Build.BuildId).zip'
+  
 
 stages:
 - stage: 'Build'
