@@ -44,7 +44,7 @@ stages:
         publishWebProjects: false
         arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
         zipAfterPublish: true
-        zipFileName: '$(zipFileName)'
+        zipFileName: $(zipFileName)
 
     - publish: '$(Build.ArtifactStagingDirectory)'
       artifact: drop
