@@ -12,6 +12,7 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Debug'
   outputFolder: './publish'
+  zipFileName: 'app-$(Build.BuildId).zip'
 
 stages:
 - stage: 'Build'
@@ -41,8 +42,9 @@ stages:
         command: 'publish'
         projects: '**/*.csproj'
         publishWebProjects: false
-        arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)/$(Build.BuildId)'
+        arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
         zipAfterPublish: true
+        zipFileName: '$(zipFileName)'
 
     - publish: '$(Build.ArtifactStagingDirectory)'
       artifact: drop
@@ -66,5 +68,5 @@ stages:
             inputs:
               azureSubscription: 'recette-lek-connection'
               appName: $(WebAppName)
-              package: $(Pipeline.Workspace)/drop/$(buildConfiguration)/$(Build.BuildId)/*.zip
+              package: $(Pipeline.Workspace)/drop/$(buildConfiguration)/$(zipFileName)
 
